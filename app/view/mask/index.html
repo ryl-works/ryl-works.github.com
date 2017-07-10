@@ -5,7 +5,7 @@
 	<title>Js实现遮罩层</title>
 	<style type="text/css">
 		body{
-			height: 3000px;
+			height: 1500px;
 		}
 		#mask{
 			background: #000;
@@ -50,11 +50,14 @@
 			//获取页面的高度和宽度
 			var sHeight = document.documentElement.scrollHeight;
 			var sWidth = document.documentElement.scrollWidth;
-			alert(sHeight);
 			//可视区域的高度和宽度
 			//如果说页面是一个竖向的页面，那么可视区域的宽度和页面宽度是一样的
 			var wHeight = document.documentElement.clientHeight;
 			var wWidth = document.documentElement.clientWidth;
+
+			sHeight = sHeight>wHeight? sHeight: wHeight;
+			sWidth = sWidth>wWidth ? sWidth: wWidth;
+
 
 			var oMask = document.createElement('div');
 			oMask.style.height = sHeight + 'px';
