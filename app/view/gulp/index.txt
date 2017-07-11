@@ -1,0 +1,95 @@
+
+https://segmentfault.com/a/1190000005025517
+使用默认的参数创建一个服务器：
+
+
+var gulp = require('gulp'),
+  connect = require('gulp-connect');
+ 
+gulp.task('connect', function() {
+  connect.server();
+});
+ 
+gulp.task('default', ['connect']);
+
+监控并自动刷新
+
+监控根目录下的app目录下所有的html文件情况，如有变动，则自动刷新，如果需要监控less，sass,css,js等等，请自动依葫芦画瓢啦！
+
+var gulp = require('gulp'),
+  connect = require('gulp-connect');
+ 
+gulp.task('connect', function() {
+  connect.server({
+    root: 'app',
+    livereload: true
+  });
+});
+ 
+gulp.task('html', function () {
+  gulp.src('./app/*.html')
+    .pipe(connect.reload());
+});
+ 
+gulp.task('watch', function () {
+  gulp.watch(['./app/*.html'], ['html']);
+});
+ 
+gulp.task('default', ['connect', 'watch']);
+
+启动与关闭服务器
+
+gulp.task('jenkins-tests', function() {
+  connect.server({
+    port: 8888
+  });
+  // run some headless tests with phantomjs 
+  // when process exits: 
+//balabala可以做好多事情
+  connect.serverClose();
+});
+
+
+启动多个服务器
+var gulp = require('gulp'),
+  stylus = require('gulp-stylus'),
+  connect = require('gulp-connect');
+ 
+gulp.task('connectDev', function () {
+  connect.server({
+    root: ['app', 'tmp'],
+    port: 8000,
+    livereload: true
+  });
+});
+ 
+gulp.task('connectDist', function () {
+  connect.server({
+    root: 'dist',
+    port: 8001,
+    livereload: true
+  });
+});
+ 
+gulp.task('html', function () {
+  gulp.src('./app/*.html')
+    .pipe(connect.reload());
+});
+ 
+gulp.task('stylus', function () {
+  gulp.src('./app/stylus/*.styl')
+    .pipe(stylus())
+    .pipe(gulp.dest('./app/css'))
+    .pipe(connect.reload());
+});
+ 
+gulp.task('watch', function () {
+  gulp.watch(['./app/*.html'], ['html']);
+  gulp.watch(['./app/stylus/*.styl'], ['stylus']);
+});
+ 
+gulp.task('default', ['connectDist', 'connectDev', 'watch']);
+
+
+
+
