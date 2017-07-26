@@ -1,100 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-    <title>拖动滚动条时会自动悬浮在网页顶部固定菜单效果丨芯晴网页特效丨CsrCode.Cn</title>
-    <style type="text/css">
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    
-    .nav-wrapper-fixed {
-        position: fixed;
-        top: 0;
-        width: 100%;
-    }
-    
-    .nav-wrapper-fixed .nav {
-        width: 960px;
-        margin: 0 auto;
-    }
-    
-    .nav-wrapper-fixed .nav li {
-        float: left;
-        width: 100px;
-        margin-right: 5px;
-        background: #CCC;
-        text-align: center;
-        height: 24px;
-        line-height: 24px;
-        list-style: none;
-    }
-    
-    .nav-wrapper {
-        margin-top: 100px;
-        width: 100%;
-    }
-    
-    .nav-wrapper .nav {
-        width: 960px;
-        margin: 0 auto;
-    }
-    
-    .nav-wrapper .nav li {
-        float: left;
-        width: 100px;
-        margin-right: 5px;
-        background: #CCC;
-        text-align: center;
-        height: 24px;
-        line-height: 24px;
-        list-style: none;
-    }
-    </style>
-    <script type="text/javascript">
-    window.onload = function() {
-        var nav = document.getElementById('nav');
-        var navFixed = document.getElementById('navFixed');
-        window.onscroll = function() {
-            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            document.title = scrollTop
-            if (scrollTop > nav.offsetTop) {
-                navFixed.style.display = 'block';
-            } else if (scrollTop < nav.offsetTop) {
-                navFixed.style.display = 'none';
-            }
-        }
-    };
-    </script>
+  <title></title>
 </head>
 
-<body style="height:2000px;">
-    <div class="nav-wrapper">
-        <div class="nav" id="nav">
-            <ul>
-                <li><a target="_blank" href="http://www.CsrCode.cn/">网页特效</a></li>
-                <li><a target="_blank" href="http://www.7caidy.com/">七彩影视</a></li>
-                <li><a target="_blank" href="http://www.33567.cn/">珊珊影视</a></li>
-                <li><a target="_blank" href="http://Changshi.CsrCode.Cn/">生活常识</a></li>
-                <li><a target="_blank" href="http://bbs.33567.cn/">外链论坛</a></li>
-                <li><a target="_blank" href="http://dir.33567.cn/">分类目录</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="nav-wrapper-fixed" id="navFixed" style="display:none;">
-        <div class="nav" id="nav">
-            <ul>
-                <li><a target="_blank" href="http://www.CsrCode.cn/">网页特效</a></li>
-                <li><a target="_blank" href="http://www.7caidy.com/">七彩影视</a></li>
-                <li><a target="_blank" href="http://www.33567.cn/">珊珊影视</a></li>
-                <li><a target="_blank" href="http://Changshi.CsrCode.Cn/">生活常识</a></li>
-                <li><a target="_blank" href="http://bbs.33567.cn/">外链论坛</a></li>
-                <li><a target="_blank" href="http://dir.33567.cn/">分类目录</a></li>
-            </ul>
-        </div>
-    </div>
+<body>
+  <div id="detail-page">
+    天天学到新知识
+  </div>
+  <div class="container">div2</div>
+  <p style="width:10px;" data-name="fdfsd">1</p>
+  <p>2</p>
+  <p>3</p>
+  <input id="btn1" type="button" value="btn" />
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    // var div1 = document.getElementById('div1');
+    // var divList = document.getElementsByTagName('div');
+    // console.log(divList.length);
+    // console.log(divList[0]);
+    // var containerList = document.getElementsByClassName('container');
+    // var pList = document.querySelectorAll('p');
+    // console.log(containerList);
+    // console.log(pList);
+    var pList = document.querySelectorAll('p');
+    var p = pList[0];
+    // console.log(p.style.width);
+    // p.style.width = '100px';
+    // console.log(p.style.width);
+    //
+    // console.log(p.nodeName);
+    // console.log(p.nodeType);
+    p.getAttribute('data-name');
+
+
+  </script>
 </body>
 
 </html>
