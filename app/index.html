@@ -6,35 +6,15 @@
 </head>
 
 <body>
-  <div id="detail-page">
-    天天学到新知识
+  <div id="div1">
+    天天有进步
   </div>
-  <div class="container">div2</div>
-  <p style="width:10px;" data-name="fdfsd">1</p>
-  <p>2</p>
-  <p>3</p>
-  <input id="btn1" type="button" value="btn" />
-  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-  <script type="text/javascript">
-    // var div1 = document.getElementById('div1');
-    // var divList = document.getElementsByTagName('div');
-    // console.log(divList.length);
-    // console.log(divList[0]);
-    // var containerList = document.getElementsByClassName('container');
-    // var pList = document.querySelectorAll('p');
-    // console.log(containerList);
-    // console.log(pList);
-    var pList = document.querySelectorAll('p');
-    var p = pList[0];
-    // console.log(p.style.width);
-    // p.style.width = '100px';
-    // console.log(p.style.width);
-    //
-    // console.log(p.nodeName);
-    // console.log(p.nodeType);
-    p.getAttribute('data-name');
-
-
+  <script>
+  var str = '1234567890';
+  var newStr = str.replace(/\d{1,3}(?=(\d{3})+$)/g,function(match){
+      return match + ','
+  });
+  console.log(newStr);
   </script>
 </body>
 
