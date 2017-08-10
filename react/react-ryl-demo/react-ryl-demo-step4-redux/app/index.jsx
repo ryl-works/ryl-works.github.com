@@ -1,15 +1,17 @@
 import React from 'react'
 import { render } from 'react-dom'
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 
 import Hello from './containers/Hello'
 
-const store = configureStore()
+
+const store = configureStore();
+
 
 render(
   <Provider store={store}>
-    <Hello />
+  <Hello />
   </Provider>,
   document.getElementById('root')
 )
