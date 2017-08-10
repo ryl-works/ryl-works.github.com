@@ -13,7 +13,6 @@ class HomeHeader extends React.Component {
         return (
             <div id="home-header" className="clear-fix">
                 <div className="home-header-left float-left">
-                dfsdfsd
                     <Link to="/city">
                         <span>{this.props.cityName}</span>
                         &nbsp;
