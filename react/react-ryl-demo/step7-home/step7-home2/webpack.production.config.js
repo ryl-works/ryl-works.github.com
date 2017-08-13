@@ -8,13 +8,13 @@ module.exports = {
     app: path.resolve(__dirname, 'app/index.jsx'),
     // 将 第三方依赖 单独打包
     vendor: [
-      'react', 
-      'react-dom', 
-      'react-redux', 
-      'react-router', 
-      'redux', 
-      'es6-promise', 
-      'whatwg-fetch', 
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'redux',
+      'es6-promise',
+      'whatwg-fetch',
       'immutable'
     ]
   },
@@ -34,7 +34,7 @@ module.exports = {
         { test: /\.less$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less') },
         { test: /\.css$/, exclude: /node_modules/, loader: ExtractTextPlugin.extract('style', 'css!postcss') },
         { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loader:'url-loader?limit=5000&name=img/[name].[chunkhash:8].[ext]' },
-        { test:/\.(png|woff|woff2|svg|ttf|eot)($|\?)/i, loader:'url-loader?limit=5000&name=fonts/[name].[chunkhash:8].[ext]'}
+        { test:/\.(woff|woff2|svg|ttf|eot)($|\?)/i, loader:'url-loader?limit=5000&name=fonts/[name].[chunkhash:8].[ext]'}
     ]
   },
   postcss: [
@@ -59,17 +59,17 @@ module.exports = {
 
     // 为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
     new webpack.optimize.OccurenceOrderPlugin(),
-    
+
     new webpack.optimize.UglifyJsPlugin({
         compress: {
           //supresses warnings, usually from module minification
           warnings: false
         }
     }),
-    
+
     // 分离CSS和JS文件
-    new ExtractTextPlugin('[name].[chunkhash:8].css'), 
-    
+    new ExtractTextPlugin('[name].[chunkhash:8].css'),
+
     // 提供公共代码
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
