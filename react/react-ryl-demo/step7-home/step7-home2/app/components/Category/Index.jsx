@@ -2,7 +2,7 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import ReactSwipe from 'react-swipe'
 import {Link} from 'react-router'
-import '../../static/css/style.less'
+import './style.less'
 
 class Category extends React.Component {
     constructor(props, context) {
