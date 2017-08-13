@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <input type="text" id="test" />
+  <input type="text" id="test"  style="border:1px solid #ddd"/>
   <ul id="parent"></ul>
   <script type="text/javascript">
     window.onload = function() {
@@ -26,6 +26,11 @@
           })
           ul.innerHTML = '';
           ul.appendChild(flag);
+          var scriptJsonp = document.getElementById('json-id');
+          if(!!scriptJsonp){
+            document.getElementsByTagName('head')[0].removeChild(scriptJsonp);
+
+          }
         }
       }
       $('parent').addEventListener('click',function(e){
@@ -38,6 +43,7 @@
       $('test').addEventListener('keyup', function(e) {
         var word = e.target.value;
         var JSONP = document.createElement("script");
+        JSONP.id = 'json-id';
         JSONP.src = "http://suggestion.baidu.com/su?wd=" + word + "&cb=window.baidu.sug";
         document.getElementsByTagName("head")[0].appendChild(JSONP);
       })
