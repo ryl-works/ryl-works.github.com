@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="text" id="test" />
+  <ul id="parent"></ul>
+  <script type="text/javascript">
+    window.onload = function() {
+      var $ = function(id){
+        return document.getElementById(id);
+      }
+      window.baidu = {
+        sug: function(json) {
+          var arr = json.s;
+          var ul = $('parent');
+          var flag = document.createDocumentFragment();
+          arr.forEach(function(item){
+              var li = document.createElement('li');
+              li.innerHTML = item;
+              flag.appendChild(li);
+          })
+          ul.innerHTML = '';
+          ul.appendChild(flag);
+        }
+      }
+      $('parent').addEventListener('click',function(e){
+        var target = e.target;
+        if(target.nodeName === 'LI'){
+            $('test').value = target.innerHTML;
+            this.innerHTML = '';
+        }
+      })
+      $('test').addEventListener('keyup', function(e) {
+        var word = e.target.value;
+        var JSONP = document.createElement("script");
+        JSONP.src = "http://suggestion.baidu.com/su?wd=" + word + "&cb=window.baidu.sug";
+        document.getElementsByTagName("head")[0].appendChild(JSONP);
+      })
+    }
+  </script>
+
+
+</body>
+
+</html>

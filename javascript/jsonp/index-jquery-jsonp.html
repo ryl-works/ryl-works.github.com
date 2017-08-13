@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+</head>
+
+<body>
+  <input type="text" id="test" />
+  <ul id="parent">
+
+  </ul>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      window.baidu = {
+        sug: function(json) {
+          var ul = $('#parent');
+          var arr = json.s;
+          var str = '';
+          arr.forEach(function(item) {
+            str += '<li>' + item + '</li>';
+          });
+          ul.html(str);
+        }
+      }
+
+      $('#parent').on('click', 'li', function(e) {
+        $('#test').val($(e.target).text());
+        $('#parent').html('');
+      });
+
+      $('#test').bind('input focus', function() {
+        var word = $(this).val();
+        $.ajax({
+          type: "GET",
+          async: false,
+          url: "http://suggestion.baidu.com/su?wd=" + word,
+          dataType: "jsonp",
+          jsonp: "cb",
+          jsonpCallback: "window.baidu.sug"
+        });
+      })
+    })
+  </script>
+
+</body>
+
+</html>

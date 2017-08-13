@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //post
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST','http://www.runoob.com/try/ajax/demo_post2.php',true);
+      xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4){
+          if(xhr.status == 200){
+            alert(xhr.responseText);
+          }
+        }
+      }
+      xhr.send("fname=Henry&lname=Ford");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div id="myDiv">
+
+  </div>
+  <input type="button" value="点击" id="b01"/>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script type="text/javascript">
+  //http://www.w3school.com.cn/jquery/ajax_ajax.asp
+    $(document).ready(function() {
+        var obj = {
+          type: 'POST',
+          // dataType: 'json',
+          url: 'http://crossdomain.com/services.php?callback=jsonpCallback',
+          // context: document.body,
+          async:false,
+          success: function(){
+            console.log(this);
+          },
+          error: function(){
+            console.log(this);
+          }
+        };
+        $.ajax(obj);
+    });
+  </script>
+
+</body>
+
+</html>
