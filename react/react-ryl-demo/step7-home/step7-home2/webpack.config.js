@@ -29,7 +29,7 @@ module.exports = {
             { test: /\.less$/, exclude: /node_modules/, loader: 'style!css!postcss!less' },
 
             { test:/\.(woff|woff2|ttf|eot)($|\?)/i, loader:'url-loader?limit=5000'}, // 限制大小小于5k
-            { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loaders:['url-loader?limit=5000&name=[hash].[ext]','image-webpack'] } // 限制大小5kb
+            { test:/\.(png|gif|jpg|jpeg|bmp)$/i, loaders:['url-loader?limit=5000&name=[hash].[ext]'] } // 限制大小5kb
 
         ]
     },
