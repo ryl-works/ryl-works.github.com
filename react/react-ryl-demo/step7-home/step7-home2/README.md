@@ -1,3 +1,8 @@
-# react-simple-o2o-demo
+#
+npm install
 
-代码尚在开发中
+npm start
+
+cd mock && npm run mock
+
+
