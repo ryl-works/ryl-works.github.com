@@ -2,6 +2,11 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import HomeAd from '../../../components/HomeAd/'
 import { getAdData } from '../../../fetch/home/home'
+
+//静态数据
+// import AdData from '../../../../mock/home/ad.js'
+
+
 class Ad extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -22,6 +27,14 @@ class Ad extends React.Component {
         )
     }
     componentDidMount(){
+      // const data = AdData;
+      // console.log(data);
+      //   if(data.length){
+      //     this.setState({
+      //       data: data
+      //     })
+      //   }
+
       //获取广告数据
       const  result = getAdData()
       result.then(res => {
