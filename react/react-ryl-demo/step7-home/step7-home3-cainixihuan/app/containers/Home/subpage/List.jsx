@@ -7,7 +7,7 @@ import LoadMore from '../../../components/LoadMore'
 import './style.less'
 
 //json静态数据
-import ListData from '../../../../mock/home/list.js'
+// import ListData from '../../../../mock/home/list.js'
 
 class List extends React.Component {
   constructor(props, context) {
@@ -65,29 +65,30 @@ class List extends React.Component {
   }
   //处理数据
   resultHandle(result) {
-    const json = ListData
-    const hasMore = json.hasMore
-    const data = json.data
-    this.setState({
-      hasMore: hasMore,
-      // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
-      data: this.state.data.concat(data)
-    })
-    // result.then(res => {
-    //   return res.json()
-    // }).then(json => {
-    //    const hasMore = json.hasMore
-    //    const data = json.data
-    //    this.setState({
-    //      hasMore: hasMore,
-    //      // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
-    //      data: this.state.data.concat(data)
-    //    })
-    // }).catch(ex =>{
-    //   if(__DEV__){
-    //     console.error('首页”猜你喜欢“获取数据报错, ',ex.message);
-    //   }
+    //静态数据
+    // const json = ListData
+    // const hasMore = json.hasMore
+    // const data = json.data
+    // this.setState({
+    //   hasMore: hasMore,
+    //   // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
+    //   data: this.state.data.concat(data)
     // })
+    result.then(res => {
+      return res.json()
+    }).then(json => {
+       const hasMore = json.hasMore
+       const data = json.data
+       this.setState({
+         hasMore: hasMore,
+         // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
+         data: this.state.data.concat(data)
+       })
+    }).catch(ex =>{
+      if(__DEV__){
+        console.error('首页”猜你喜欢“获取数据报错, ',ex.message);
+      }
+    })
   }
 }
 

@@ -4,7 +4,7 @@ import HomeAd from '../../../components/HomeAd/'
 import { getAdData } from '../../../fetch/home/home'
 
 //静态数据
-import AdData from '../../../../mock/home/ad.js'
+// import AdData from '../../../../mock/home/ad.js'
 
 class Ad extends React.Component {
     constructor(props, context) {
@@ -26,32 +26,32 @@ class Ad extends React.Component {
         )
     }
     componentDidMount(){
-
-      const data = AdData;
-      console.log(data);
-        if(data.length){
-          this.setState({
-            data: data
-          })
-        }
-      // //获取广告数据
-      // const  result = getAdData()
-      // result.then(res => {
-      //   return res.json()
-      // }).then(json => {
-      //   // 处理获取的数据
-      //   const data = json
+      //静态数据
+      // const data = AdData;
+      // console.log(data);
       //   if(data.length){
       //     this.setState({
       //       data: data
       //     })
       //   }
-      // }).catch(ex => {
-      //   // 发生错误
-      //   if(__DEV__){
-      //     console.error('首页广告模块获取数据报错,',ex.message);
-      //   }
-      // })
+      //获取广告数据
+      const  result = getAdData()
+      result.then(res => {
+        return res.json()
+      }).then(json => {
+        // 处理获取的数据
+        const data = json
+        if(data.length){
+          this.setState({
+            data: data
+          })
+        }
+      }).catch(ex => {
+        // 发生错误
+        if(__DEV__){
+          console.error('首页广告模块获取数据报错,',ex.message);
+        }
+      })
     }
 }
 
