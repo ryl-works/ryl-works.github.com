@@ -13,7 +13,7 @@ class Item extends React.Component {
             <div>
               <div className="list-item clear-fix">
                   <div className="item-img-container float-left" >
-                      <img src={require(data.img)} alt={data.title}/>
+                      <img src={data.img} alt={data.title}/>
                   </div>
               </div>
               <div className="item-content">

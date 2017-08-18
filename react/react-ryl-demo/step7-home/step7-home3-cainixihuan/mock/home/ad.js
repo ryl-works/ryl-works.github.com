@@ -11,10 +11,10 @@ module.exports = [
         img: 'https://ryl-works.github.io/react/img/138012-20161016191648124-298129318.png',
         link: '#'
     },
-    // {
+    {
         title: '亮亮车',
+        // img: 'http://images2015.cnblogs.com/blog/138012/201610/138012-20161016191653983-1962772127.png',
         img: 'https://ryl-works.github.io/react/img/138012-20161016191653983-1962772127.png',
-        img: 'http://images2015.cnblogs.com/blog/138012/201610/138012-20161016191653983-1962772127.png',
         link: '#'
     },
     {

@@ -54,8 +54,6 @@ class List extends React.Component {
     const cityName = this.props.cityName
     const page = this.state.page
     const result = getListData(cityName, page)
-    console.log(result);
-    console.log(ListData);
     this.resultHandle(result)
 
     //增加page技术
