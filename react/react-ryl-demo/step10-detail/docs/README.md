@@ -1,179 +1,103 @@
-
-## part1 && part2
-
-- part1 主要介绍一些正式进入页面开发前的准备工作，但是也都非常重要（否则不会单独拿出来）
-- part2 正式开发搜索页面，详解页面每一部分的开发过程
-
-## 两个入口
-
-从首页进入搜索结果页的场景有以下两种：
-
-- 通过输入框输入关键字搜索
-- 通过轮播图的类型搜索
-
-输入框进入搜索页面的的实现方式，我们最后再介绍，到时候会引入`约束性和非约束性组件`的概念，内容比较多。
-
-轮播图进入搜索页面的方式比较简单，就是通过`<Link>`组件设置一个路由就好了
-
-```
-<Link to="/search/jingdian"><li className="float-left jingdian">景点</li></Link>
-<Link to="/search/ktv"><li className="float-left ktv">KTV</li></Link>
-
-**演示过程中需要注意的是，这两种方式跳转到搜索结果页时路由是怎样的。**
-
 ## 路由配置
 
-找到配置路由的文件`./app/router/routeMap.jsx`，找到搜索结果页的代码
+进入路由配置文件`./app/router/routeMap.jsx`找到详情页的配置代码，可以看到引用的是`./app/containers/Detail`页面
 
 ```
 <Router history={this.props.history}>
     <Route path='/' component={App}>
         ......
-        <Route path='/search/:category(/:keyword)' component={Search}/>
+        <Route path='/detail/:id' component={Detail}/>
         ......
     </Route>
 </Router>
 ```
-上文让大家注意两种跳转到搜索结果页的方式的路由，可以和这里的规则对应一下。
-代码中如何得到这些参数呢？可以通过以下的方式得到：
+
+这里简单注意两点
+
+- `App`父组件
+- 路由配置中`id`参数
+
+
+## 页面入口
+
+所有的商户详情页，都是在列表页进入的。而所有的列表页，都是通过`./app/components/List`这个组件来显示的，而`List`中每一项，又都是`Item`组件来实现的。
+
+因此在`Item`组件中，增加一个`<Link>`作为链接将原来的内容包括起来。
 
 ```
-componentDidMount() {
-    const params = this.props.params
-    console.log('category param: ' + params.category)
-    console.log('key param:' + params.keyword)
+<Link to={'/detail/' + data.id}>
+    ...原来的内容...
+</Link>
+```
+
+## Header
+
+从页面最终效果看来，该页面的头部和选择城市页面的头部完全一样，因此直接可以引用之前的`Header`组件 **（体会一下组件化的好处，抽离出组件即可通用）**
+
+```
+<Header title="商户详情"/>
+```
+
+## 获取后端数据
+
+进入页面之后，首先可以拿到商户的`id`，然后就可以获取商户的信息了。开发`./app/fetch/detail/detai.js`，即可看到获取后端数据的接口
+
+```
+// 获取商户信息
+export function getInfoData(id) {
+   const result = get('/api/detail/info/' + id)
+   return result
+}
+
+// 获取评论数据
+export function getCommentData(page, id) {
+    const result = get('/api/detail/comment/' + page + '/' + id)
+    return result
 }
 ```
-**非约束性**
+## 商户信息模块
 
-针对`<input>`输入框这种类型，你可以通过这种方式来实现（其中`defaultValue`就是原生DOM中的`value`属性）
-
-```
-<input type="text" defaultValue="a" ref="input"/>
-```
-
-获取输入框的值的时候，需要这样做——即通过查询DOM，获取DOM属性的方式来做。
+看最终效果图，这部分需要获取数据之后再展示数据，完全符合创建`subpage`的条件。因此在`subpage`中创建`Info.jsx`子页面。然后将子页面引用到`Detail`页面中，并将`id`传入进去。
 
 ```
-var input = this.refs.input
-console.log(input.value)
+<Info id={id}/>
 ```
 
-这样做，跟之前jquery的做法一样，都是围绕着DOM来做的。缺点有两个：
-
-- 依赖DOM操作，不符合组件化的设计，也不易扩展
-- 查询DOM消耗更多性能
-
-**约束性**
-
-比较推荐的方式是这一种。即监控`<input>`的变化，将值实时保存到`state`中，直接从`state`中获取值。
+在`Info`子页面中，要根据传入的`id`获取后端数据，然后传递给一个组件来展示。创建`DetailInfo`组件，并引用到`Info`页面中，将获取的数据传递过去。
 
 ```
-<input type="text" value={this.state.name} onChange={this.handleChange} />
-
-//...省略部分代码
-handleChange: function(e) {
-  this.setState({name: e.target.value});
-}
+<DetailInfo data={this.state.info}/>
 ```
 
-React或者Vue都是一种基于数据驱动视图的设计方式，定好数据和视图的规则之后，只更改数据，不直接操作DOM。操作DOM的事情，交给React或者Vue这个框架的代码来搞定。
+具体到`DetailInfo`页面就比较简单了，即把需要展示的信息展示出来即可。最后就是样式。
 
-最后看一下实际代码中如何修改`Home`页面的输入框。
 
-# 搜索结果页的开发 - part2
+## 点评列表
 
-## 抽离 SearchInput 组件
-
-根据最终实现的效果可以看到，搜索结果页的头部有一个输入框，而首页的头部也有一个输入框，两者的作用都是一样的。因此要把这个输入框抽离成一个组件，两个地方公用。
-
-由于搜索结果页还没有开始创建，因此处理的这个组件先给首页的头部用，即用于`HomeHeader`组件中。
-
-创建`./app/components/SearchInput`组件，并引用到`HomeHeader`中。
+和`Info`子页面一样，点评列表也需要创建一个子页面。在`subpage`中创建`Comment.jsx`，并引用到`Detail`页面中，把商户的`id`传入。**注意，这里还引用了同目录下的一个`style.less`，不要忘记**
 
 ```
-<SearchInput value="" enterHandle={this.enterHandle.bind(this)}/>
+<Comment id={id}/>
 ```
 
-引用时需要传递两个参数，`value`即引用时要显示的默认值，`enterHandle`即在其中输入内容并回车时，要触发的事件。具体的实现，看实际代码即可。
+到这里之后，代码讲解暂停，将`Comment`子页面相关的代码都直接还原出来，直接看最终的运行效果————**上拉加载更多**
 
-在`SearchInput`组件中，首先要满足约束性组件的条件，第二要用上传入的`enterHandle`的方法。
+至此为止，上拉加载更多的页面已经遇到三个：
 
-## SearchHeader 组件
+- 首页的“猜你喜欢”
+- 搜索结果页的列表
+- 此处的“用户评论”
 
-搜索结果页的头部，也是一个红色背景的Header，但是这个Header的样子，和之前做的其他页面的都不一样，因此又要重新做一个Header组件。
+这里的用户评论跟之前两个的实现方式也是完全一样的，不同的地方在于引用的`ListComponent`组件不一样。因为列表的样式不一样，这个无可厚非。但是实现逻辑是一样的。但是`LoadMore`组件是公用的。
 
-创建`./app/components/SearchHeader`组件，并引用到`Search`页面中。
+- `var ListComponent = require('../../../components/List')`
+- `var ListComponent = require('../../../components/CommentList')`
 
-```
-<SearchHeader keyword={params.keyword}/>
-```
+这里我们当然不会再去赘述开发过程，即便是这里的`ListComponent`引用的组件不一样，我们也不去挨行写代码来讲了。
 
-注意，这里要传入一个`keyword`属性，即把搜索结果页拿到的`keyword`参数传递进去 —— 因为要在头部的 input 中显示搜索的关键字。（这个`params.keyword`在 part1 的时候已经解说过了）
+这里我们跳出具体的代码实现，考虑一个层次更高的问题 ———— **如何保证这种类似功能或者页面的实现一致性？** ———— 即，一个地方实现了，其他类似的地方可以直接引用或者照搬，不必再做不一样的实现。我总结的主要有两点：
 
-在`SearchHeader`组件的代码实现中，左侧有一个返回按钮，然后就是输入框。这里的输入框当然要引用刚刚抽离出来的`SearchInput`组件。
+- 后端返回数据的高度统一性，例如都是`{data: [...], hasMore: true}`这种形式
+- 前端组件的高度拆分和抽象，以便做到最大极限的灵活拼接
 
-```
-<SearchInput value={this.props.keyword || ''} enterHandle={this.enterHandle.bind(this)}/>
-```
-
-两个必要的参数是必须传的。其中传递给`value`参数的，正好是接收到的`keyword`属性值
-
-## 结果列表
-
-这里的结果列表和首页中的“猜你喜欢”基本差不多，也是需要在`subpage`目录下创建一个子页面，然后在子页面中获取数据，并传递给`./app/components/List`，加载更多的实现方式，也是一个样子的。
-
-唯一不同的是，如果在搜索结果页头部的输入框中再次输入内容重新进行搜索时，就需要多一步处理。
-
-```
-    // 处理重新搜索
-    componentDidUpdate(prevProps, prevState) {
-        const keyword = this.props.keyword
-        const category = this.props.category
-
-        // 搜索条件完全相等时，忽略。重要！！！
-        if (keyword === prevProps.keyword && category === prevProps.category) {
-            return
-        }
-
-        // 重置 state
-        this.setState(initialState)
-
-        // 重新加载数据
-        this.loadFirstPageData()
-    }
-```
-
-这里需要理解`componentDidMount`和`componentDidUpdate`两个生命周期的不同。
-
-- 页面初次渲染，会走`componentDidMount`
-- 页面再次渲染，就不会走`componentDidMount`，而只走`componentDidUpdate`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##
+最后引出的这个问题，非常重要，可能在不同的项目中就会有不同的解决方案。我根据本次教程的代码总结这两点，对于大家来说也只能是抛砖引玉。最重要的是，大家要学会这种思考方式。
