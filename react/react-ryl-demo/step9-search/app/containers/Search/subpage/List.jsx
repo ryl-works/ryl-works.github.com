@@ -8,7 +8,7 @@ import LoadMore from '../../../components/LoadMore'
 import { getSearchData } from '../../../fetch/search/search'
 
 //静态数据
-import SearchData from '../../../../mock/search/list.js'
+// import SearchData from '../../../../mock/search/list.js'
 
 const initialState = {
   data: [],
@@ -76,37 +76,37 @@ class SearchList extends React.Component {
 
     // 处理数据
     resultHandle(result){
-      const json = SearchData
-      const hasMore = json.hasMore
-      const data = json.data
+      // const json = SearchData
+      // const hasMore = json.hasMore
+      // const data = json.data
+      // this.setState({
+      //   hasMore: hasMore,
+      //   // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
+      //   data: this.state.data.concat(data)
+      // })
+
+
+      增加page计数
+      const page = this.state.page
       this.setState({
-        hasMore: hasMore,
-        // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
-        data: this.state.data.concat(data)
+        page: page + 1
       })
 
-
-      //增加page计数
-      // const page = this.state.page
-      // this.setState({
-      //   page: page + 1
-      // })
-      //
-      // result.then(res => {
-      //   return res.json()
-      // }).then(json => {
-      //   const hasMore = json.hasMore
-      //   const data = json.data
-      //   this.setState({
-      //     hasMore: hasMore,
-      //     // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
-      //     data: this.state.data.concat(data)
-      //   })
-      // }).catch(ex => {
-      //   if(__DEV__){
-      //     console.error('搜索页获取数据报错,',ex.message);
-      //   }
-      // })
+      result.then(res => {
+        return res.json()
+      }).then(json => {
+        const hasMore = json.hasMore
+        const data = json.data
+        this.setState({
+          hasMore: hasMore,
+          // 注意，这里讲最新获取的数据，拼接到原数据之后，使用 concat 函数
+          data: this.state.data.concat(data)
+        })
+      }).catch(ex => {
+        if(__DEV__){
+          console.error('搜索页获取数据报错,',ex.message);
+        }
+      })
     }
     componentDidUpdate(prevProps,prevState){
       const keyword = this.props.keyword
